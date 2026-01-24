@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VANI DASARI</title>
+  <style>
+    :root {
+      --color-bg: #f8f9fa;
+      --color-text: #222;
+      --primary: #485fc7;
+      --accent: #fdbd36;
+      --header-bg: #fff;
+      --nav-bg: #e9ecef;
+      --badge: #fd4d4d;
+      --badge-pulse: rgba(253,77,77,0.3);
+      --transition: 0.3s;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      transition: background 0.7s, color 0.7s;
+    }
+    header {
+      background: var(--header-bg);
+      box-shadow: 0 2px 8px #eee;
+      padding: 1.3em 1.5em;
+      text-align: center;
+    }
+    header h1 { margin: 0; }
+    header .subtitle {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-top: 0.3em;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.3em;
+      background: var(--nav-bg);
+      padding: 0.6em 1em;
+      border-radius: 8px;
+      gap: 2em;
+      box-shadow: 0 1px 7px #eee;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2em;
+      margin: 0;
+      padding: 0;
+    }
+    nav li a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 500;
+      padding: 0.38em 0.75em;
+      border-radius: 3px;
+      transition: background var(--transition), color var(--transition);
+    }
+    nav li a.active, nav li a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    #theme-switcher {
+      background: var(--accent);
+      color: #222;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.38em 1.2em;
+      font-weight: 600;
+      transition: background var(--transition), color var(--transition);
+      margin-left: 2em;
+    }
+    section { max-width: 790px; margin: 2.1em auto 0; padding: 1.6em 1.3em;}
+    h2 { color: var(--primary); margin-bottom: 1.2em;}
+    abbr { border-bottom: 1px dotted var(--accent); cursor: help;}
+    .keyword, abbr {
+      transition: background 0.3s, color 0.3s;
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+    .keyword:hover, abbr:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Experience Animations and Tooltips */
+    .job-entry {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.9s, transform 0.8s;
+      margin-bottom: 2em;
+      background: #f7f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+      padding: 1.1em 1.3em 1em 1.5em;
+    }
+    .job-entry.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .job-entry h3 { margin-top: 0; color: #e74c3c; }
+    .duration { color: #555; font-size: 0.95em; font-style: italic; margin-bottom: 0.5em; }
+    .responsibility { position: relative; cursor: help;}
+    .responsibility:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 105%;
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: pre-line;
+      background: #fdbd36;
+      color: #333;
+      padding: 0.4em 0.8em;
+      border-radius: 4px;
+      font-size: 0.96em;
+      box-shadow: 0 2px 6px #ccc;
+      min-width: 160px;
+      z-index: 20;
+    }
+    details { margin-top: 1em; }
+    details summary { cursor: pointer; color: #34495e; font-weight: 600; }
+    details[open] summary { color: #e74c3c;}
+    details p { margin-left: 1em; color: #405060; }
+
+    /* Education */
+    #sort-gpa {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      font-weight: 600;
+      margin-bottom: 1.3em;
+      padding: 0.6em 1.6em;
+      cursor: pointer;
+      transition: background 0.28s;
+    }
+    #sort-gpa:hover { background: #b63222;}
+    table {width: 100%; border-collapse: collapse; background: #fff;}
+    th, td {padding: 0.7em 0.7em; border-bottom: 1px solid #ececec; text-align: left;}
+    th { background: #f3f6fa;}
+    /* Skills Toggle */
+    #skillToggle { text-align: center; margin-bottom: 30px;}
+    #skillToggle button {
+      background-color: #34495e;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      margin: 0 8px;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #skillToggle button:hover,
+    #skillToggle button.active {
+      background-color: #e74c3c;
+    }
+    fieldset {
+      border: 2px solid #e74c3c;
+      border-radius: 10px;
+      padding: 1em 1.5em;
+      max-width: 320px;
+      margin: 0 auto 2em;
+    }
+    legend { color: #e74c3c; font-weight: 700; font-size: 1.15em; }
+    fieldset ul {
+      margin: 1em 0 0 1.1em;
+      padding: 0; list-style-type: disc;
+    }
+    fieldset li { margin-bottom: 0.42em; font-size: 1.05em; }
+
+    /* Projects: Flip cards, filters, images, color backgrounds */
+    .project-filters {
+      display: flex; gap: 1.15em; margin-bottom: 1.5em; flex-wrap: wrap; justify-content: center;
+    }
+    .project-filters button {
+      background: #ececec;
+      color: var(--primary);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.5em 1em;
+      font-weight: 500;
+      transition: background 0.28s, color 0.28s;
+    }
+    .project-filters button.active, .project-filters button:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .projects-vertical { display: flex; flex-direction: column; gap: 32px; max-width: 420px; margin: 0 auto;}
+    .flip-card {
+      background: transparent;
+      width: 100%; min-height: 355px; perspective: 1000px; margin: 0 auto;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%; height: 355px;
+      transition: transform 0.7s cubic-bezier(.7,-0.3,.5,1.7);
+      transform-style: preserve-3d; border-radius: 12px;
+      box-shadow: 0 4px 18px #00000015;
+    }
+    .flip-card:hover .flip-card-inner,
+    .flip-card:focus-within .flip-card-inner { transform: rotateY(180deg);}
+    .flip-card-front, .flip-card-back {
+      position: absolute; width: 100%; height: 100%;
+      backface-visibility: hidden; border-radius: 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 1em 1.2em; box-sizing: border-box;
+    }
+    .fabric-defect .flip-card-front { background: #d4f0f0;}
+    .drug-discovery .flip-card-front { background: #f0e6d2;}
+    .speech-emotion .flip-card-front { background: #f9e2e7;}
+    .flip-card-front h4 { margin: 1.1em 0 0.2em; }
+    .flip-card-front img { border-radius: 6px; width: 92%; height: 155px; object-fit: cover;}
+    .flip-card-back {
+      background: #fff; color: #2c3e50; transform: rotateY(180deg); overflow-y: auto; align-items: flex-start; text-align: left;
+    }
+    .flip-card-back dl {margin-top: 0;}
+    .flip-card-back dt { font-weight: 700; margin-top: 10px;}
+    .flip-card-back dd { margin: 0 0 8px 16px;}
+    .flip-card-back a {
+      color: var(--primary); text-decoration: underline; margin-top: 12px; display: inline-block; font-weight: 600;
+    }
+    /* Interests: Simple, Accessible List + Modal */
+    .interests-list {
+      list-style: none; padding: 0; max-width: 400px;
+      margin: 1.5em auto 0;
+      display: flex; flex-direction: column; gap: 1em;
+    }
+    .interests-list li {
+      background: #f7f9fb;
+      border-radius: 8px;
+      padding: 1em 1.5em;
+      font-size: 1.10em;
+      color: #34495e;
+      cursor: pointer;
+      transition: background 0.28s, color 0.28s;
+      border: 1px solid #e2e6ea;
+    }
+    .interests-list li:focus, .interests-list li:hover {
+      background: #e74c3c;
+      color: #fff;
+      outline: none;
+      border-color: #e74c3c;
+    }
+    .interest-modal {
+      position: fixed; inset: 0;
+      background: rgba(44,62,80,0.45);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 1001;
+    }
+    .interest-modal[hidden] { display: none; }
+    .modal-content {
+      background: #fff; color: #222; border-radius: 10px;
+      max-width: 380px; padding: 2em 1.2em 1.4em;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.23);
+      position: relative; text-align: center;
+    }
+    #close-modal {
+      position: absolute; top: 0.6em; right: 1em;
+      background: none; border: none; font-size: 2em;
+      color: #c0392b; cursor: pointer; font-weight: 600;
+    }
+
+    /* Certifications */
+    .badge-highlight { display: inline-block; }
+    .badge {
+      background: var(--badge);
+      color: #fff;
+      font-size: 0.97em;
+      border-radius: 7px;
+      padding: 0.25em 0.9em;
+      margin-left: 0.7em;
+      font-weight: 700;
+      box-shadow: 0 0 7px var(--badge);
+      animation: pulse 1.2s infinite;
+      position: relative;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0px var(--badge-pulse);}
+      50% { box-shadow: 0 0 18px var(--badge-pulse);}
+      100% { box-shadow: 0 0 0px var(--badge-pulse);}
+    }
+    /* Footer & back-to-top */
+    footer { text-align: center; background: var(--nav-bg); padding: 2em 0; font-size: 1.11em; margin-top: 2.2em;}
+    #back-to-top { display: none; background: var(--primary); color: #fff; border: none; border-radius: 50%; font-size: 2.1em; width: 46px; height: 46px; position: fixed; right: 2vw; bottom: 5vw; cursor: pointer; box-shadow: 0 2px 10px #5551; opacity: 0; transition: opacity 0.7s; z-index: 50;}
+    #back-to-top.show { display: block; opacity: 0.94; }
+
+    @media (max-width: 600px) {
+      section, header { max-width: 99vw; }
+      .projects-vertical { max-width: 98vw;}
+      fieldset { max-width: 99vw;}
+      nav { flex-direction: column; gap: 0.7em;}
+      nav ul {flex-wrap: wrap;}
+    }
+    body.dark-theme {
+      --color-bg: #252a2f;
+      --color-text: #f5f7fa;
+      --primary: #ffd336;
+      --accent: #4d94fd;
+      --header-bg: #222c36;
+      --nav-bg: #1a2230;
+      --badge: #fd54a6;
+      --badge-pulse: rgba(253,84,166,0.22);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>VANI DASARI</h1>
+    <p class="subtitle">Software Developer</p>
+    <nav id="navbar">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#Experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#interests">Interests</a></li>
+      </ul>
+      <button id="theme-switcher">Switch Theme</button>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      <span id="greeting"></span> I'm <strong>Vani Dasari</strong>, an energetic software engineer with a passion for solving real-world problems through technology. With a background in computer science and hands-on experience at Pandora R&amp;D Labs, I've contributed to innovative e-learning solutions, advanced machine learning projects, and robust web platforms.
+      My expertise covers <mark class="keyword">Python, Java, C, SQL, HTML, CSS, MySQL, Linux</mark>, and modern development practices like <abbr title="Agile and Scrum project management methods">Agile &amp; Scrum</abbr> and <abbr title="Test Driven Development">TDD</abbr>. I thrive in team environments, am committed to continuous learning, and excel at turning complex challenges into high-impact software.
+    </p>
+  </section>
+
+  <section id="Experience">
+    <h2>Work Experience</h2>
+    <div class="job-entry">
+      <h3>System Engineer Trainee <span>at Pandora R&amp;D Labs Pvt Ltd</span></h3>
+      <span class="duration">Dec 2022 – July 2023</span>
+      <ol>
+        <li class="responsibility" data-tip="Supported mobile app design aligned to requirements.">
+          Design and development of mobile applications for e-learning platforms
+        </li>
+        <li class="responsibility" data-tip="Worked on architecture and app deployment strategies.">
+          Exposure to system-level architecture and deployment strategies
+        </li>
+        <li class="responsibility" data-tip="Ensured performance and reliability across devices.">
+          Team collaboration for feature implementation
+        </li>
+        <li class="responsibility" data-tip="Improved app stability via testing and debugging.">
+          Testing, debugging, and optimizing mobile app components
+        </li>
+        <li class="responsibility" data-tip="Strengthened development lifecycle & teamwork skills.">
+          Strengthened practical knowledge in software systems, lifecycle, and team projects
+        </li>
+      </ol>
+      <details>
+        <summary>More details</summary>
+        <p>
+          Hands-on experience in agile environments, practical deployments, and collaborative development for scalable learning solutions.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <button id="sort-gpa">Sort by GPA</button>
+    <table>
+      <thead>
+      <tr>
+        <th>Degree</th>
+        <th>Institution</th>
+        <th>Graduation</th>
+        <th>GPA/Percentage</th>
+        <th>Achievements</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Master of Science</td>
+          <td>Long Island University, Brooklyn, NY, USA</td>
+          <td>Jan 2024 – Exp Dec 2025</td>
+          <td>3.85 / 4</td>
+          <td>Master’s in Computer Science</td>
+        </tr>
+        <tr>
+          <td>Bachelor of Technology (CSE)</td>
+          <td>Sreenidhi Institute of Science and Technology (JNTU, Hyderabad)</td>
+          <td>2023</td>
+          <td>78%</td>
+          <td>Computer Science and Engineering</td>
+        </tr>
+        <tr>
+          <td>Diploma</td>
+          <td>Sanjay Gandhi Memorial Government Polytechnic</td>
+          <td>2020</td>
+          <td>86%</td>
+          <td>Technical Diploma</td>
+        </tr>
+        <tr>
+          <td>S.S.C</td>
+          <td>Sri Chaitanya High School</td>
+          <td>2017</td>
+          <td>9.2 CGPA</td>
+          <td>Academic Distinction</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div id="skillToggle" aria-label="Skill level filter">
+      <button type="button" data-level="beginner">Beginner</button>
+      <button type="button" data-level="intermediate">Intermediate</button>
+      <button type="button" data-level="advanced" class="active">Advanced</button>
+    </div>
+    <fieldset data-level="beginner" hidden>
+      <legend>Beginner Skills</legend>
+      <ul>
+        <li>HTML</li>
+        <li>Python</li>
+        <li>Linux</li>
+      </ul>
+    </fieldset>
+    <fieldset data-level="intermediate" hidden>
+      <legend>Intermediate Skills</legend>
+      <ul>
+        <li>CSS</li>
+        <li>Java</li>
+        <li>MySQL</li>
+        <li>Agile & Scrum</li>
+      </ul>
+    </fieldset>
+    <fieldset data-level="advanced">
+      <legend>Advanced Skills</legend>
+      <ul>
+        <li>Python3</li>
+        <li>C</li>
+        <li>SQL</li>
+        <li>CSS</li>
+        <li>Java</li>
+        <li>MySQL</li>
+        <li>Test Driven Development (TDD)</li>
+        <li>Project Management</li>
+        <li>Team Collaboration</li>
+        <li>Problem Solving</li>
+      </ul>
+    </fieldset>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-filters">
+      <button data-tech="all" class="active">All</button>
+      <button data-tech="ML">Machine Learning</button>
+      <button data-tech="DL">Deep Learning</button>
+    </div>
+    <div class="projects-vertical">
+      <div class="flip-card drug-discovery" data-tech="ML">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://images.unsplash.com/photo-1588776814546-d3a3d8cbadc1?auto=format&fit=crop&w=300&q=80" alt="Drug Discovery ML"/>
+            <h4>Drug Discovery using ML</h4>
+          </div>
+          <div class="flip-card-back">
+            <dl>
+              <dt>Name</dt>
+              <dd>Drug Discovery using Machine Learning</dd>
+              <dt>Description</dt>
+              <dd>Developed models to identify therapeutic compounds and predict dosages for Alzheimer’s treatment.</dd>
+              <dt>Technologies</dt>
+              <dd>Python, ML, Scikit-Learn</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card fabric-defect" data-tech="DL">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" alt="Fabric Defect Detection"/>
+            <h4>Fabric Defect Detection</h4>
+          </div>
+          <div class="flip-card-back">
+            <dl>
+              <dt>Name</dt>
+              <dd>Fabric Defect Detection</dd>
+              <dt>Description</dt>
+              <dd>Deep learning model for automated defect detection in textile industry fabric textures.</dd>
+              <dt>Technologies</dt>
+              <dd>Python, DL, TensorFlow</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card speech-emotion" data-tech="ML">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80" alt="Speech Emotion Recognition"/>
+            <h4>Speech Emotion Recognition</h4>
+          </div>
+          <div class="flip-card-back">
+            <dl>
+              <dt>Name</dt>
+              <dd>Speech Emotion Recognition</dd>
+              <dt>Description</dt>
+              <dd>Detected emotions in voice using ML, useful for call centers and healthcare.</dd>
+              <dt>Technologies</dt>
+              <dd>Python, ML, Librosa</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <h2>Certifications / Achievements</h2>
+    <dl>
+      <div class="badge-highlight">
+        <dt>Advanced Programming Techniques <span class="badge">Top Certification</span></dt>
+        <dd>Practical implementation of advanced programming paradigms and optimization.</dd>
+      </div>
+      <dt>Software Development Essentials</dt>
+      <dd>Training in core software engineering and development best practices.</dd>
+    </dl>
+  </section>
+
+  <section id="interests">
+    <h2>Interests &amp; Hobbies</h2>
+    <ul class="interests-list">
+      <li tabindex="0" data-detail="Enjoy building innovative web applications and experimenting with Artificial Intelligence.">
+        <span class="interest-label">Coding &amp; AI</span>
+      </li>
+      <li tabindex="0" data-detail="Love creating and mixing music, and exploring digital sound production.">
+        <span class="interest-label">Music Creation</span>
+      </li>
+      <li tabindex="0" data-detail="Passionate about photography and telling stories through images.">
+        <span class="interest-label">Photography</span>
+      </li>
+    </ul>
+    <div id="interest-modal" class="interest-modal" hidden>
+      <div class="modal-content">
+        <button type="button" id="close-modal" aria-label="Close modal">&times;</button>
+        <p id="interest-detail"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Let’s Connect!</p>
+    <button id="back-to-top"><span>&uarr;</span></button>
+  </footer>
+  <script>
+    // About Me greeting
+    const greetings = ["Hello and welcome!", "Namaste, nice to meet you!", "Hi there, let's connect and grow!"];
+    document.getElementById('greeting').textContent = greetings[Math.floor(Math.random() * greetings.length)];
+
+    // SKILLS
+    const buttons = document.querySelectorAll('#skillToggle button');
+    const fieldsets = document.querySelectorAll('fieldset[data-level]');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+        });
+        button.classList.add('active');
+        button.setAttribute('aria-pressed', 'true');
+        const level = button.getAttribute('data-level');
+        fieldsets.forEach(fs => {
+          fs.hidden = fs.getAttribute('data-level') !== level;
+        });
+      });
+    });
+    document.querySelector('#skillToggle button[data-level="advanced"]').click();
+
+    // Project filter
+    document.querySelectorAll('.project-filters button').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.project-filters button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tech = btn.dataset.tech;
+        document.querySelectorAll('.flip-card').forEach(card => {
+          card.style.display = (tech === "all" || card.dataset.tech === tech) ? "block" : "none";
+        });
+      });
+    });
+    window.addEventListener('load', () => {
+      document.querySelector('.project-filters button[data-tech="all"]').click();
+    });
+
+    // Interests modal
+    document.querySelectorAll('.interests-list li').forEach(item => {
+      item.addEventListener('click', () => showInterest(item));
+      item.addEventListener('keydown', e => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          showInterest(item);
+        }
+      });
+    });
+    function showInterest(item) {
+      document.getElementById('interest-detail').textContent = item.dataset.detail;
+      document.getElementById('interest-modal').hidden = false;
+      document.getElementById('close-modal').focus();
+    }
+    document.getElementById('close-modal').onclick = () =>
+      document.getElementById('interest-modal').hidden = true;
+    document.getElementById('interest-modal').onclick = e => {
+      if(e.target === document.getElementById('interest-modal'))
+        document.getElementById('interest-modal').hidden = true;
+    };
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape' && !document.getElementById('interest-modal').hidden)
+        document.getElementById('interest-modal').hidden = true;
+    });
+
+    // Experience animation
+    function animateJobEntries() {
+      document.querySelectorAll('.job-entry').forEach(entry => {
+        const top = entry.getBoundingClientRect().top;
+        if (top < window.innerHeight - 50) entry.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', animateJobEntries);
+    window.addEventListener('load', animateJobEntries);
+
+    // Sticky nav and section highlight
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const navLinks = navbar.querySelectorAll('a');
+      let curActive = '';
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if(rect.top <= 120 && rect.bottom > 60) curActive = section.id;
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle(
+          'active',
+          link.getAttribute('href').substring(1) === curActive
+        );
+      });
+    });
+    navbar.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const tSec = document.getElementById(link.getAttribute('href').slice(1));
+        if (tSec) tSec.scrollIntoView({behavior: 'smooth'});
+      });
+    });
+
+    // Sort education by GPA
+    document.getElementById('sort-gpa').addEventListener('click', () => {
+      const tbody = document.querySelector('#education tbody');
+      let rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const valA = parseFloat(a.children[3].textContent) || 0;
+        const valB = parseFloat(b.children[3].textContent) || 0;
+        return valB - valA;
+      });
+      rows.forEach(row => tbody.appendChild(row));
+    });
+
+    // Back-to-top button
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) backToTop.classList.add('show');
+      else backToTop.classList.remove('show');
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Theme switcher
+    const themeBtn = document.getElementById('theme-switcher');
+    function setTheme(isDark) {
+      document.body.classList.toggle('dark-theme', isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    themeBtn.addEventListener('click', () => setTheme(!document.body.classList.contains('dark-theme')));
+    window.addEventListener('load', () => setTheme(localStorage.getItem('theme') === 'dark'));
+  </script>
+</body>
+</html>
